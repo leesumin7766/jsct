@@ -1,53 +1,27 @@
-
+function positivemove(position) {
+    const positive = { // 올라가는 사다리 
+        4 : 14, 8 : 30, 21 : 63, 28 : 76, 50 : 67, 71 : 92, 80 : 99
+    }
+    return positive[position] || position;
+}
+function negativemove(position) { //뱀사다리는 뒤로 가므로 negative
+    const negative = {
+        32 : 10, 36 : 6, 48 : 26, 62 : 18, 88 : 24, 95: 56 , 97 : 78
+    }
+    return negative[position] || position;
+}
 function nextPosition(current, dice) {
-    const next = current + dice;
-    if (next == 4) {
-        return dice + 10;
-    }
-    else if (next == 8) {
-        return dice + 22;
-    }
-    else if (next == 28) {
-        return dice + 48;
-    }
-    else if (next == 21) {
-        return dice + 42;
-    }
-    else if (next == 50) {
-        return dice + 17;
-    }
-    else if (next == 71) {
-        return dice + 92;
-    }
-    else if (next == 80) {
-        return dice + 19;
-    }
-    
-    return dice;    
+    let next = current + dice; // next는 바뀌므로 let 변수로 변경
+    next = positivemove(next) // 함수 적용
+    next = negativemove(next) // 함수 적용
+    return next;
 }
 
-let start = 1;
-let next = 1;
-let dice = 3;
-next = start + nextPosition(start, dice);
-console.log("from=",start,", dice=",dice,", next=", next);
-
-start = next;
-dice = 4;
-next = start + nextPosition(start, dice);
-console.log("from=",start,", dice=",dice,", next=", next);
-
-start = next;
-dice = 3;
-next = start + nextPosition(start, dice);
-console.log("from=",start,", dice=",dice,", next=", next);
-
-start = next;
-dice = 5;
-next = start + nextPosition(start, dice);
-console.log("from=",start,", dice=",dice,", next=", next);
-
-start = next;
-dice = 1;
-next = start + nextPosition(start, dice);
-console.log("from=",start,", dice=",dice,", next=", next);
+let position = 1;
+let diceRolls = [6, 1, 5, 4, 4, 1, 4, 3]; // 여러 번의 주사위 굴림 결과
+for (let i = 0; i < diceRolls.length; i++) { // 주사위 굴린 횟수만큼 i 반복
+    let dice = diceRolls[i];
+    let next = nextPosition(position, dice);
+    console.log(`DiceRoll ${i + 1}: From ${position}, Dice: ${dice} → To ${next}`);
+    position = next;
+}
