@@ -1,0 +1,7 @@
+#  AST 구문
+[VarDeclaration]
+ └─ Identifier: a
+ └─ InitExpression: 
+     └─ NewExpression:
+         └─ Object: A
+         └─ Method: init()
